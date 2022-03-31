@@ -18,7 +18,7 @@ app.use(express.json());
 
 // database connection
 try {
-  mongoose.connect(`${process.env.DB_CONNECT}`)
+  mongoose.connect(process.env.DB_CONNECT)
   console.log('DB Connected')
 } catch (error) {
   console.log(error)
