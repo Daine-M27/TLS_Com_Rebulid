@@ -38,8 +38,7 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
-  res.send('error');
+  res.json({"error": "route does not exist"});
 });
 
 app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
