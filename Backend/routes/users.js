@@ -11,35 +11,54 @@ dotenv.config();
 const router = express.Router();
 
 router.post("/register", async function (req, res) {
+  // deconstruct req.body
+  const { name, email, password, companyCode, repStatus, userType } = req.body;
+
   // Hash password
   const salt = await bcrypt.genSalt(10);
-  const hashPassword = await bcrypt.hash(req.body.password, salt);
+  const hashPassword = await bcrypt.hash(password, salt);
 
-  // Create an user object
-  let user = new User({
-    name: req.body.name,
-    email: req.body.email,
-    password: hashPassword,
-    companyCode: req.body.companyCode,
-    repStatus: req.body.repStatus,
-    userType: req.body.userType,
-  });
+  // check for all values
+  if ( name && email && password && companyCode && repStatus != null && userType ) {
+    // Create an user object
+    let user = new User({
+      name,
+      email,
+      password: hashPassword,
+      companyCode,
+      repStatus,
+      userType,
+    });
 
-  // Save User in the database
-  user.save((err, registeredUser) => {
-    if (err) {
-      console.log(err);
-    } else {
-      // create payload then Generate an access token
-      let payload = {
-        id: registeredUser._id,
-        userType: req.body.userType || 0,
-      };
-      const token = jwt.sign(payload, process.env.TOKEN_SECRET);
-
-      res.status(200).send({ token });
-    }
-  });
+    // Save User in the database
+    User.findOneAndUpdate(
+      { email },
+      { 
+        name: user.name,
+        email:user.email,
+        password: user.password,
+        companyCode: user.companyCode,
+        repStatus: user.repStatus,
+        userType: user.userType
+      },
+      { new: true, upsert: true },
+      (err, registeredUser) => {
+        if (err) {
+          console.log(err);
+        } else {
+          // create payload then Generate an access token
+          let payload = {
+            id: registeredUser._id,
+            userType: userType,
+          };
+          const token = jwt.sign(payload, process.env.TOKEN_SECRET);
+          res.status(200).send({ token });
+        }
+      }
+    );
+  } else {
+    res.status(400).send({ error: "Missing data in request body." });
+  }
 });
 
 router.post("/login", async function (req, res) {
