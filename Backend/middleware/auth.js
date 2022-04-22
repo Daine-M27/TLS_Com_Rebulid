@@ -6,17 +6,22 @@ dotenv.config();
 
 const verifyUserToken = (req, res, next) => {
   let token = req.headers.authorization;
-  if (!token)
+  // console.log(token)
+  if (!token) {
     return res.status(401).send("Access Denied / Unauthorized request");
+  }
 
   try {
     token = token.split(" ")[1]; // Remove Bearer from string
-
-    if (token === "null" || !token)
-      return res.status(401).send("Unauthorized request");
+    // console.log(token)
+    if (token === "null" || !token) {
+      return res.status(401).send("Unauthorized request 1");
+    }
 
     let verifiedUser = jwt.verify(token, process.env.TOKEN_SECRET); 
-    if (!verifiedUser) return res.status(401).send("Unauthorized request");
+    if (!verifiedUser) {
+      return res.status(401).send("Unauthorized request 2")
+    }
 
     req.user = verifiedUser; // user_id & user_type_id
     next();
@@ -26,17 +31,20 @@ const verifyUserToken = (req, res, next) => {
 };
 
 const IsUser = async (req, res, next) => {
-  if (req.user.user_type_id === 0) {
+  if (req.user.userType === "User") {
     next();
+  } else {
+    return res.status(401).send("Unauthorized! Not a valid user");
   }
-  return res.status(401).send("Unauthorized!");
 };
 
 const IsAdmin = async (req, res, next) => {
-  if (req.user.user_type_id === 1) {
+  if (req.user.userType === "Administrator") {
+    console.log(req.user);
     next();
+  } else {
+    return res.status(401).send("Unauthorized! Non-Administrator");
   }
-  return res.status(401).send("Unauthorized!");
 };
 
 export { verifyUserToken, IsUser, IsAdmin };
