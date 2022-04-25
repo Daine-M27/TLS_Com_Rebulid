@@ -30,31 +30,22 @@ router.post("/register", verifyUserToken, IsAdmin, async function (req, res) {
     repStatus != null &&
     userType
   ) {
-    // Create an user object
-    let user = new User({
-      name,
-      email,
-      password: hashPassword,
-      companyCode,
-      repStatus,
-      userType,
-    });
-
     // Save User in the database
     User.findOneAndUpdate(
-      { email },
+      { email }, // filter to look for
       {
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        companyCode: user.companyCode,
-        repStatus: user.repStatus,
-        userType: user.userType,
+        name,
+        email,
+        password: hashPassword,
+        companyCode,
+        repStatus,
+        userType,
       },
       { new: true, upsert: true },
       (err, registeredUser) => {
         if (err) {
           console.log(err);
+          res.status(400).send({ error: "Error saving to database." });
         } else {
           // create payload then Generate an access token
           let payload = {
@@ -100,7 +91,7 @@ router.post("/login", async function (req, res) {
           user.password
         );
         if (!validPass)
-          return res.status(401).send("Email or Password is wrong");
+          return res.status(401).send("Invalid Username or Password");
 
         // Create and assign token
         let payload = {
