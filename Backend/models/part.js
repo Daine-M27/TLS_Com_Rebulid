@@ -36,6 +36,7 @@ const partSchema = new Schema(
     photos: [{
       filename: String,
       url: String,
+      position: Number,
     }]
   },
   { timestamps: true }
