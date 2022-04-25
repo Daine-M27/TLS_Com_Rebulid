@@ -6,11 +6,9 @@ import User from "../models/user.js";
 import dotenv from "dotenv";
 import { verifyUserToken, IsAdmin, IsUser } from "../middleware/auth.js";
 
-
 // load .env information into process.env
 dotenv.config();
 const router = express.Router();
-
 
 /**
  * Create User
@@ -24,7 +22,14 @@ router.post("/register", verifyUserToken, IsAdmin, async function (req, res) {
   const hashPassword = await bcrypt.hash(password, salt);
 
   // check for all values
-  if ( name && email && password && companyCode && repStatus != null && userType ) {
+  if (
+    name &&
+    email &&
+    password &&
+    companyCode &&
+    repStatus != null &&
+    userType
+  ) {
     // Create an user object
     let user = new User({
       name,
@@ -38,13 +43,13 @@ router.post("/register", verifyUserToken, IsAdmin, async function (req, res) {
     // Save User in the database
     User.findOneAndUpdate(
       { email },
-      { 
+      {
         name: user.name,
-        email:user.email,
+        email: user.email,
         password: user.password,
         companyCode: user.companyCode,
         repStatus: user.repStatus,
-        userType: user.userType
+        userType: user.userType,
       },
       { new: true, upsert: true },
       (err, registeredUser) => {
@@ -62,8 +67,8 @@ router.post("/register", verifyUserToken, IsAdmin, async function (req, res) {
       }
     );
   } else {
-    console.log('Registration Error');
-    //res.status(400).send({ error: "Missing data in request body." });
+    console.log("Registration Error");
+    res.status(400).send({ error: "Missing data in request body." });
   }
 });
 
@@ -71,14 +76,15 @@ router.post("/register", verifyUserToken, IsAdmin, async function (req, res) {
  * Delete user by email address
  */
 router.post("/delete", verifyUserToken, IsAdmin, async function (req, res) {
-  User.findOneAndDelete({email: req.body.email}, async(err, user) => {
+  User.findOneAndDelete({ email: req.body.email }, async (err, user) => {
     if (err) {
-      console.log(err)
+      console.log(err);
+      res.status(400).send({ error: "Unable to delete record." });
     } else {
-      res.status(200).send({deleted: `${user}`})
+      res.status(200).send({ deleted: `${user}` });
     }
-  })
-})
+  });
+});
 
 /**
  * Login with user account
@@ -110,6 +116,5 @@ router.post("/login", async function (req, res) {
     }
   });
 });
-
 
 export default router;
