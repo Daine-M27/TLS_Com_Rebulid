@@ -46,7 +46,7 @@ router.get("/categories", (req, res) => {
 
 /** Get Single product category */
 router.get("/category/:categoryId", (req, res) => {
-  Category.findOne({ filter: req.params.categoryId }, (err, doc) => {
+  Category.findById(req.params.categoryId, (err, doc) => {
     if (err) {
       console.log(err);
       res.status(400).send({ error: "Error getting categories from database" });
@@ -66,6 +66,11 @@ router.delete("/category/:categoryId", verifyUserToken, IsAdmin, (req, res) => {
       res.status(200).send(doc);
     }
   });
+
+   //------------------TODO------------------// 
+  // Add logic to check for products that are in category on delete, remove or alert user that products exsits before deleting.
+  
+
 });
 
 export default router;
