@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import dotenv from "dotenv";
 import { verifyUserToken, IsAdmin, IsUser } from "../middleware/auth.js";
-import user from "../models/user.js";
+
 
 // load .env information into process.env
 dotenv.config();
@@ -71,7 +71,7 @@ router.post("/register", verifyUserToken, IsAdmin, async function (req, res) {
  * Delete user by email address
  */
 router.post("/delete", verifyUserToken, IsAdmin, async function (req, res) {
-  user.findOneAndDelete({email: req.body.email}, async(err, user) => {
+  User.findOneAndDelete({email: req.body.email}, async(err, user) => {
     if (err) {
       console.log(err)
     } else {

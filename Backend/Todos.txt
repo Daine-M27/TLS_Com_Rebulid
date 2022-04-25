@@ -6,16 +6,27 @@ User Authorization and Authentication
   3. User Delete. -Done
   4. User Authorization Check. -Done
 
-Part Categories
-  1. Create Route
-  2. Read Route
-  3. Update Route
-  4. Delete Route
-  5. Category Model
+///---  Product Related Items ---///
+  Part Categories
+    1. Create Route
+    2. Read Route
+    3. Update Route
+    4. Delete Route
+    5. Category Model -Done
 
-Parts
-  1. Create Route
-  2. Read Route
-  3. Update Route
-  4. Delete Route
-  5. Part Model
+  Parts
+    1. Create Route
+    2. Read Route
+    3. Update Route
+    4. Delete Route
+    5. Part Model -Done
+
+  Finish Options
+    1. Create Route
+    2. Read Route
+    3. Update Route
+    4. Delete Route
+    5. Finish Model -Done
+  
+  A part must have categories and finish options available when creating.
+  
