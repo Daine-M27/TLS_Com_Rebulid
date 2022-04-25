@@ -11,17 +11,17 @@ dotenv.config();
 const router = express.Router();
 
 /**
- * Create User
+ * Create User or update if exists
  */
 router.post("/register", verifyUserToken, IsAdmin, async function (req, res) {
-  // deconstruct req.body
+  // Deconstruct body
   const { name, email, password, companyCode, repStatus, userType } = req.body;
 
   // Hash password
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password, salt);
 
-  // check for all values
+  // Check for all values
   if (
     name &&
     email &&

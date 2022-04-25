@@ -8,9 +8,9 @@ User Authorization and Authentication
 
 ///---  Product Related Items ---///
   Part Categories
-    1. Create Route
+    1. Create Route -Done
     2. Read Route
-    3. Update Route
+    3. Update Route -Done
     4. Delete Route
     5. Category Model -Done
 

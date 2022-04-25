@@ -12,7 +12,7 @@ const router = express.Router();
 
 /** Create product or Update if existing category */
 router.post("/category", verifyUserToken, IsAdmin, async (req, res) => {
-  // deconstruct req.body
+  // deconstruct body
   const { name, code, position } = req.body;
 
   if ((name, code, position)) {
@@ -22,7 +22,7 @@ router.post("/category", verifyUserToken, IsAdmin, async (req, res) => {
       { new: true, upsert: true },
       (err, doc) => {
         if (err) {
-          res.status(400).send({ error: 'Error saving to database' });
+          res.status(400).send({ error: "Error saving to database" });
         }
         res.status(200).send({ doc });
       }
@@ -33,15 +33,39 @@ router.post("/category", verifyUserToken, IsAdmin, async (req, res) => {
 });
 
 /** Get All product categories */
-router.get("/categories", verifyUserToken, IsAdmin, (req, res) => {});
+router.get("/categories", (req, res) => {
+  Category.find((err, docs) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send({ error: "Error getting categories from database" });
+    } else {
+      res.status(200).send(docs);
+    }
+  });
+});
 
 /** Get Single product category */
-router.get("/category/:categoryId", verifyUserToken, IsAdmin, (req, res) => {});
-
-/** Update product category */
-// router.put("/category/:categoryId", verifyUserToken, IsAdmin, (req, res) => {});
+router.get("/category/:categoryId", (req, res) => {
+  Category.findOne({ filter: req.params.categoryId }, (err, doc) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send({ error: "Error getting categories from database" });
+    } else {
+      res.status(200).send(doc);
+    }
+  });
+});
 
 /** Delete product category */
-router.delete("/category", verifyUserToken, IsAdmin, (req, res) => {});
+router.delete("/category/:categoryId", verifyUserToken, IsAdmin, (req, res) => {
+  Category.findByIdAndDelete(req.params.categoryId, (err, doc) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send({ error: "Error deleting category from database" });
+    } else {
+      res.status(200).send(doc);
+    }
+  });
+});
 
 export default router;
