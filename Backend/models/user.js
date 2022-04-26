@@ -10,6 +10,7 @@ const userSchema = new Schema(
     companyCode: String,
     repStatus: Boolean,
     userType: String,
+    lastLogin: Date
   },
   { timestamps: true }
 );

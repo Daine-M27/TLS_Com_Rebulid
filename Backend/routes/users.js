@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import dotenv from "dotenv";
-import { verifyUserToken, IsAdmin, IsUser } from "../middleware/auth.js";
+import { verifyUserToken, IsAdmin } from "../middleware/auth.js";
 
 // load .env information into process.env
 dotenv.config();
@@ -94,20 +94,23 @@ router.post("/login", async function (req, res) {
           req.body.password,
           user.password
         );
-        if (!validPass)
+        if (!validPass) {
           return res.status(401).send("Invalid Username or Password");
-
-        // Create and assign token
-        let payload = {
-          id: user._id,
-          userType: user.userType,
-          email: user.email,
-          name: user.name,
-          repStatus: user.repStatus,
-        };
-        const token = jwt.sign(payload, process.env.TOKEN_SECRET);
-
-        res.status(200).header("auth-token", token).send({ token });
+        } else {
+          // Create and assign token
+          let payload = {
+            id: user._id,
+            userType: user.userType,
+            email: user.email,
+            name: user.name,
+            repStatus: user.repStatus,
+          };
+          const token = jwt.sign(payload, process.env.TOKEN_SECRET);
+          await User.findByIdAndUpdate(user._id, {
+            lastLogin: Date().toString(),
+          });
+          res.status(200).header("auth-token", token).send({ token });
+        }
       } else {
         res.status(401).send("Invalid Username or Password");
       }
