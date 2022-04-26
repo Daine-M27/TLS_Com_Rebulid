@@ -42,7 +42,7 @@ const IsUser = async (req, res, next) => {
 
 const IsAdmin = async (req, res, next) => {
   if (req.user.userType === "Administrator") {
-    console.log(req.user);
+    // console.log(req.user);
     next();
   } else {
     return res.status(401).send({ error: "Unauthorized! Non-Administrator" });

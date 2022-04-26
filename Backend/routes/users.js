@@ -66,15 +66,19 @@ router.post("/register", verifyUserToken, IsAdmin, async function (req, res) {
 /**
  * Delete user by email address
  */
-router.post("/delete", verifyUserToken, IsAdmin, async function (req, res) {
-  User.findOneAndDelete({ email: req.body.email }, async (err, user) => {
-    if (err) {
-      console.log(err);
-      res.status(400).send({ error: "Unable to delete record." });
-    } else {
-      res.status(200).send({ deleted: `${user}` });
-    }
-  });
+router.delete("/delete", verifyUserToken, IsAdmin, async function (req, res) {
+  if (req.user.email != req.body.email) {
+    User.findOneAndDelete({ email: req.body.email }, async (err, user) => {
+      if (err) {
+        console.log(err);
+        res.status(400).send({ error: "Unable to delete record." });
+      } else {
+        res.status(200).send({ deleted: `${user}` });
+      }
+    });
+  } else {
+    res.status(400).send({ error: "Cannot delete own account." });
+  }
 });
 
 /**
@@ -97,6 +101,9 @@ router.post("/login", async function (req, res) {
         let payload = {
           id: user._id,
           userType: user.userType,
+          email: user.email,
+          name: user.name,
+          repStatus: user.repStatus,
         };
         const token = jwt.sign(payload, process.env.TOKEN_SECRET);
 

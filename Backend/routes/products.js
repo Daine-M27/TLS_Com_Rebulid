@@ -58,7 +58,8 @@ router.get("/category/:categoryId", (req, res) => {
 
 /** Delete product category */
 router.delete("/category/:categoryId", verifyUserToken, IsAdmin, (req, res) => {
-  Category.findByIdAndDelete(req.params.categoryId, (err, doc) => {
+  const categoryId = req.params.categoryId
+  Category.findByIdAndDelete(categoryId, (err, doc) => {
     if (err) {
       console.log(err);
       res.status(400).send({ error: "Error deleting category from database" });
@@ -69,7 +70,7 @@ router.delete("/category/:categoryId", verifyUserToken, IsAdmin, (req, res) => {
 
    //------------------TODO------------------// 
   // Add logic to check for products that are in category on delete, remove or alert user that products exsits before deleting.
-  
+  // Part.find({category: "categoryId"})
 
 });
 
