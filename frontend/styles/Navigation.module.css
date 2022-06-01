@@ -1,0 +1,30 @@
+.navigation {
+  width: auto;
+  position: absolute;
+  right: -4px;
+  bottom: 55px;
+  text-align: right;
+}
+
+.navlink {
+  display: inline;
+  background: black;
+  -webkit-border-top-left-radius: 2px;
+  -webkit-border-top-right-radius: 2px;
+  -moz-border-radius-topleft: 2px;
+  -moz-border-radius-topright: 2px;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  margin-right: 5px;
+}
+
+.navlink a {
+  color: white;
+  text-decoration: none;
+  padding: 4px;
+  font-size: 13px;
+}
+
+.navlink.special {
+  background-color: #e54221;
+}

@@ -5,10 +5,24 @@ import { verifyUserToken, IsAdmin, IsUser } from "../middleware/auth.js";
 import Category from "../models/category.js";
 import Finish from "../models/finish.js";
 import Part from "../models/part.js";
+import Positions from "../models/positions.js"
 
 // load .env information into process.env
 // dotenv.config();
 const router = express.Router();
+
+const positionUpdate = (obj, type) => {
+  if(type === 'Category'){
+    
+  }
+  else if(type === 'Part'){
+
+  }
+  else if(type === 'Image'){
+
+  }
+};
+
 
 //------------------------Product Category Routes------------------------//
 ///////////////////////////////////////////////////////////////////////////
@@ -71,7 +85,7 @@ router.delete("/category/:categoryId", verifyUserToken, IsAdmin, (req, res) => {
     }
   });
 
-  //------------------TODO------------------//
+   //------------------TODO------------------// 
   // Add logic to check for products that are in category on delete, remove or alert user that products exsits before deleting.
   // Part.find({category: "categoryId"})
 });
