@@ -1,0 +1,48 @@
+.row {
+  padding-top: 1em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.columnLarge {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 2;
+}
+
+.columnLargeInner {
+  margin-right:.5em;
+  padding: 6px;
+  padding-right: 6px;
+}
+
+
+
+.columnSmall {
+  margin-right:.5em;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1
+}
+
+.columnSmallInner {
+  margin-top: .25em;
+  padding: 1em;
+  background-color: #fea;
+  border: solid 1px #fc0;
+}
+
+.columnSmallInner form label {
+  font-size: smaller;
+  font-weight: bold;
+}
+
+.lostPassword {
+  font-size:small;
+}
+
+

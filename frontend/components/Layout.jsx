@@ -8,7 +8,9 @@ export const Layout = ({children, title}) => {
     <>
       <Header title={title}/>
       <div className=''>
-        <main>{children}</main>
+        <main>
+          <div id='contents'>{children}</div>
+        </main>
       </div>
     </>
   )
