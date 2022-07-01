@@ -1,10 +1,29 @@
+import { useState } from 'react'
 import styles from '../styles/Login.module.css'
 import Link from 'next/link';
-import { signIn } from 'next-auth/client'
+import axios from 'axios';
+
 
 
 
 const Login = () => {
+
+  const [ username, setUsername ] = useState("")
+  const [ password, setPassword ] = useState("")
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const credentials = { username, password }
+
+    const user = await axios.post('/api/auth/login', credentials)
+    console.log(user);
+  }
+
+  const handleLogout = async () => {
+    const user = await axios.get('/api/auth/logout')
+
+  }
+
   return (
     <div className={styles.row}>
       <div className={styles.columnLarge}>
@@ -26,17 +45,21 @@ const Login = () => {
       </div>
       <div className={styles.columnSmall}>
         <div className={styles.columnSmallInner}>
-          <form className={styles.loginForm}>
+          <form className={styles.loginForm} onSubmit={(e) => { handleSubmit(e)}}>
             <label htmlFor="userName">Username:</label>
-            <input type="text" />
+            <input type="text" name="username" id="username" onChange={(e) => { setUsername(e.target.value) }}/>
             <label htmlFor="password">Password:</label>
-            <input type="text" />
+            <input type="text" name="password" id="password" onChange={(e) => { setPassword(e.target.value) }}/>
             <br/>
             <br/>
-            <input type="submit" value="Login" /> <span className={styles.lostPassword}><Link href='/'>Lost password?</Link></span>
+            <input type="submit" value="Login" /> 
+            <span className={styles.lostPassword}><Link href='/'>Lost password?</Link></span>
           </form>
         </div>
       </div>
+      <button onClick={() => handleLogout()}>
+        Logout
+      </button>
     </div>
   );
 }

@@ -1,5 +1,4 @@
 import { getLayout } from '../components/Layout'
-import { signIn } from 'next-auth/client'
 import Login from '../components/Login'
 
 export async function getStaticProps() {
