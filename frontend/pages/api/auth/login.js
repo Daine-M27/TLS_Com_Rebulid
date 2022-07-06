@@ -1,4 +1,5 @@
-import { sign } from "jsonwebtoken";
+//import { sign } from "jsonwebtoken";
+import { sign } from '../../../lib/token';
 import { serialize } from "cookie";
 import dbConnect from "../../../lib/db";
 import User from "../../../models/User";
@@ -14,15 +15,16 @@ export default async function (req, res) {
 
     try {
         const user = await User.findOne({username: username})
+        console.log(user, 'user from login');
         
         const validPass = await bcrypt.compare( password, user.password )
+        console.log(validPass, 'validPass');
         
         if(!validPass) { 
             res.status(401).json({message: "Invalid Credentials!"})
             
         } else {
-            const token = sign({
-                exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7, // seven days
+            const token = await sign({
                 username: user.username,
                 userType: user.userType,
                 userEmail: user.email,

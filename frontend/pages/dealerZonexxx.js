@@ -1,5 +1,6 @@
+import Dashboard from '../components/Dashboard'
 import { getLayout } from '../components/Layout'
-import Login from '../components/Login'
+
 
 export async function getStaticProps() {
   return {
@@ -9,10 +10,10 @@ export async function getStaticProps() {
   }
 }
 
-export default function DealerZone() {
+export default function DealerZonexxx() {
   return (
     <>
-      <Login />
+     <Dashboard />
     </>
   )
 }
@@ -20,4 +21,4 @@ export default function DealerZone() {
 
 
 
-DealerZone.getLayout = getLayout;
+DealerZonexxx.getLayout = getLayout;
