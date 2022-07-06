@@ -10,7 +10,7 @@ export async function getStaticProps() {
   }
 }
 
-export default function DealerZonexxx() {
+export default function DealerZone() {
   return (
     <>
      <Dashboard />
@@ -21,4 +21,4 @@ export default function DealerZonexxx() {
 
 
 
-DealerZonexxx.getLayout = getLayout;
+DealerZone.getLayout = getLayout;

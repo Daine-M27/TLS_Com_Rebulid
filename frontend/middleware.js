@@ -7,7 +7,7 @@ const secret = process.env.TOKEN_SECRET;
 export function middleware(request) {
 
   const tls = request.cookies.get('theLightSource');
-  console.log(tls, 'middleware');
+  // console.log(tls, 'middleware');
 
   if (request.nextUrl.pathname.startsWith("/dealerZone")) {
     if (tls === undefined) {

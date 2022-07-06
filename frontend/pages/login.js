@@ -25,7 +25,7 @@ export default function Login() {
   
       const user = await axios.post('/api/auth/login', credentials)
       if (user.status === 200) {
-        router.push('/dealerZone/user')
+        router.push('/dealerZone')
       }
     }
   
