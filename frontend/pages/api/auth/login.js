@@ -8,24 +8,25 @@ import bcrypt from "bcryptjs";
 const tokenSecret = process.env.TOKEN_SECRET;
 
 export default async function (req, res) {
-    const { username, password } = req.body;
-    console.log(username, password);
+    const { emailAddress, password } = req.body;
+    console.log(emailAddress, password);
 
     await dbConnect();
 
     try {
-        const user = await User.findOne({username: username})
+        const user = await User.findOne({email: emailAddress})
         console.log(user, 'user from login');
         
         const validPass = await bcrypt.compare( password, user.password )
-        console.log(validPass, 'validPass');
+        //console.log(validPass, 'validPass');
         
         if(!validPass) { 
             res.status(401).json({message: "Invalid Credentials!"})
             
         } else {
             const token = await sign({
-                username: user.username,
+                firstName: user.firstName,
+                lastName: user.lastName,
                 userType: user.userType,
                 userEmail: user.email,
                 repStatus: user.repStatus,

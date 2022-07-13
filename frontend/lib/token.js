@@ -1,6 +1,7 @@
 import { SignJWT, jwtVerify } from "jose";
 
 export async function sign(payload, secret) {
+  // console.log(payload);
   const issuedAt = Math.floor(Date.now() / 1000)
   const exp = issuedAt + 60 * 60 * 24 * 7 // seven days
   const encoder = new TextEncoder()
@@ -16,7 +17,7 @@ export async function sign(payload, secret) {
 
 export async function verify(token, secret) {
   const encoder = new TextEncoder()
-  const {payload} = await jwtVerify(token, encoder.encode(secret))
+  const { payload } = await jwtVerify(token, encoder.encode(secret))
 
   return payload
 }

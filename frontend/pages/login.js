@@ -14,18 +14,18 @@ export async function getStaticProps() {
 }
 
 export default function Login() {
-    const [ username, setUsername ] = useState("")
+    const [ emailAddress, setEmailAddress ] = useState("")
     const [ password, setPassword ] = useState("")
 
     const router = useRouter();
   
     const handleSubmit = async (e) => {
       e.preventDefault();
-      const credentials = { username, password }
+      const credentials = { emailAddress, password }
   
       const user = await axios.post('/api/auth/login', credentials)
       if (user.status === 200) {
-        router.push('/dealerZone')
+        router.push(`/dealerZone/${user._id}`)
       }
     }
   
@@ -51,8 +51,8 @@ export default function Login() {
         <div className={styles.columnSmall}>
           <div className={styles.columnSmallInner}>
             <form className={styles.loginForm} onSubmit={(e) => { handleSubmit(e)}}>
-              <label htmlFor="userName">Username:</label>
-              <input type="text" name="username" id="username" onChange={(e) => { setUsername(e.target.value) }}/>
+              <label htmlFor="userName">Email Address:</label>
+              <input type="text" name="emailAddress" id="emailAddress" onChange={(e) => { setEmailAddress(e.target.value) }}/>
               <label htmlFor="password">Password:</label>
               <input type="password" name="password" id="password" onChange={(e) => { setPassword(e.target.value) }}/>
               <br/>

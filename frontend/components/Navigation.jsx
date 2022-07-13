@@ -19,7 +19,7 @@ const Navigation = () => {
           <Link href='/contact'>Contact</Link>
         </li>
         <li className={`${styles.navlink} ${styles.special}`}>
-          <Link href='/dealerZone'>Dealer Zone</Link>
+          <Link href='/dashboard'>Dealer Zone</Link>
         </li>
       </ul>
     </nav>
