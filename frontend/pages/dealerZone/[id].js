@@ -22,9 +22,8 @@ export default function DealerZone() {
 
   useEffect(() => {
     async function getUser() {
-      const userData = await axios.get(`/api/users/${id}`)
-      console.log('dealerZone userdata', {...userData.data.user})
-      setUser({...userData.data.user})
+      const response = await axios.get(`/api/users/${id}`)
+      setUser({...response.data.user})
     };
     
     if(id){
@@ -39,7 +38,7 @@ export default function DealerZone() {
 
   return (
     <>
-      <h1>{user.email}</h1>
+      <p>{user.email}</p>
       <Dashboard />
     </>
   );

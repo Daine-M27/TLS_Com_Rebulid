@@ -23,8 +23,10 @@ export default function Login() {
       e.preventDefault();
       const credentials = { emailAddress, password }
   
-      const user = await axios.post('/api/auth/login', credentials)
-      if (user.status === 200) {
+      const response = await axios.post('/api/auth/login', credentials)
+      const { ...user } = response.data.user // map user data to object
+      
+      if (response.status === 200) {
         router.push(`/dealerZone/${user._id}`)
       }
     }

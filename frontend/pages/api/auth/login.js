@@ -9,13 +9,13 @@ const tokenSecret = process.env.TOKEN_SECRET;
 
 export default async function (req, res) {
     const { emailAddress, password } = req.body;
-    console.log(emailAddress, password);
+    // console.log(emailAddress, password);
 
     await dbConnect();
 
     try {
         const user = await User.findOne({email: emailAddress})
-        console.log(user, 'user from login');
+        // console.log(user, 'user from login');
         
         const validPass = await bcrypt.compare( password, user.password )
         //console.log(validPass, 'validPass');
@@ -47,7 +47,7 @@ export default async function (req, res) {
             })
             
             res.setHeader("Set-Cookie", serialized)
-            res.status(200).json({message: "Login Successful!"})
+            res.status(200).json({message: "Login Successful!", user})
         }
     } catch (error) {
         res.status(401).json({message: "Invalid Credentials!"})
